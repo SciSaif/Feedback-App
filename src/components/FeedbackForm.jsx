@@ -2,17 +2,33 @@ import React from "react";
 import Card from "./shared/Card";
 import Button from "./shared/Button";
 import RatingSelect from "./RatingSelect";
-import { useState } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
+import FeedbackContext from "../context/FeedbackContext";
 
-function FeedbackForm({ handleAdd }) {
+function FeedbackForm() {
   const [text, setText] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(10);
 
+  const { addFeedback, feedbackEdit, updateFeedback } =
+    useContext(FeedbackContext);
+
+  const textInput = useRef(null);
+
+  useEffect(() => {
+    if (feedbackEdit.edit === true) {
+      setBtnDisabled(false);
+      setText(feedbackEdit.item.text);
+      setRating(feedbackEdit.item.rating);
+      textInput.current.focus();
+      textInput.current.select();
+    }
+  }, [feedbackEdit]);
+
   const handleTextChange = (e) => {
     let value = e.target.value;
-    console.log(text);
+    // console.log(text);
     if (value === "") {
       setBtnDisabled(true);
       setMessage(null);
@@ -33,7 +49,11 @@ function FeedbackForm({ handleAdd }) {
         text,
         rating,
       };
-      handleAdd(newFeedback);
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback);
+      } else {
+        addFeedback(newFeedback);
+      }
       setText("");
     }
   };
@@ -49,6 +69,8 @@ function FeedbackForm({ handleAdd }) {
             type="text"
             placeholder="Write a review"
             value={text}
+            autoFocus
+            ref={textInput}
           />
           <Button type="submit" isDisabled={btnDisabled}>
             Send
