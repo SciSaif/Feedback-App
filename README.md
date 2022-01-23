@@ -1,9 +1,9 @@
-#Feedback App 
+<h1>Feedback App </h1>
 A simple Feedback Application made using React. 
 A live Demo: https://feedback-app-scisaif.vercel.app/
 
 
-
+<hr>
 
 ## Getting Started with Create React App
 
