@@ -2,11 +2,10 @@
 A simple Feedback Application made using React. <br>
 A live Demo: https://feedback-app-scisaif.vercel.app/
 
-
+<div><br></div>
 <hr>
-<div></div>
-<div></div>
-<div></div>
+<div><br><br><br></div>
+
 
 ## Getting Started with Create React App
 
